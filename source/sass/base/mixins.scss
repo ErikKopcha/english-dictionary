@@ -24,13 +24,19 @@
   }
 }
 
-@mixin item-centered {
+@mixin flex-item-centered {
   display: flex;
   align-items: center;
 }
 
-@mixin full-centered {
+@mixin flex-full-centered {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
