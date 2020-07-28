@@ -24,12 +24,21 @@ class englishDictionary {
     localStorage.length < 1 ? this.words = [] : this.words = JSON.parse(localStorage.getItem('words'));
 
     const addWordToSave = index => {
-      this.saveWrapper.innerHTML += `
-        <p class="save-word">
-          <span>${this.words[index].english}</span> - <span>${this.words[index].russian}</span>
-          <button class="btn-del">&times;</button>
-        </p>
-      `;
+      let p = document.createElement('p'),
+        button = document.createElement('button');
+
+      p.classList.add('save-word');
+      p.innerHTML = `<span>${this.words[index].english}</span> - <span>${this.words[index].russian}</span>`;
+
+      button.classList.add('btn-del');
+      button.innerHTML = '&times;';
+      button.addEventListener('click', (e) => {
+        this.deleteWord(e);
+      });
+
+      p.appendChild(button);
+
+      this.saveWrapper.appendChild(p);
     };
 
     this.words.forEach((el, i) => {
@@ -66,30 +75,16 @@ class englishDictionary {
       this.english = english;
       this.russian = russian;
     }
+  }
 
-    const deleteWord = e => {
-      let theTarget = e.target;
-      let rowIndex = theTarget.rowIndex;
-      theTarget.closest('.save-word').remove();
+  deleteWord (e) {
+    let theTarget = e.target;
+    let rowIndex = theTarget.rowIndex;
+    theTarget.closest('.save-word').remove();
 
-      this.words.splice(rowIndex, 1);
-      localStorage.removeItem('words');
-      localStorage.setItem('words', JSON.stringify(this.words));
-    };
-
-    const addEventDelete = () => {
-      if (this.words.length > 0) {
-        this.btnsDelete = document.querySelectorAll('.btn-del');
-
-        for (let btn of this.btnsDelete) {
-          btn.addEventListener('click', e => {
-            deleteWord(e);
-          });
-        }
-      }
-    };
-
-    addEventDelete();
+    this.words.splice(rowIndex, 1);
+    localStorage.removeItem('words');
+    localStorage.setItem('words', JSON.stringify(this.words));
   }
 }
 
