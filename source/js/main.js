@@ -41,9 +41,11 @@ class englishDictionary {
       this.saveWrapper.appendChild(p);
     };
 
-    this.words.forEach((el, i) => {
-      addWordToSave(i);
-    });
+    try {
+      this.words.forEach((el, i) => {
+        addWordToSave(i);
+      });
+    } catch(e) {}
 
     this.buttonAdd.addEventListener('click', () => {
       if (
